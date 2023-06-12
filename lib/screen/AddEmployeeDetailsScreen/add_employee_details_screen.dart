@@ -11,6 +11,7 @@ import '../../networking/bloc/delete_employee_bloc.dart';
 import '../../utils/date_limit_checker.dart';
 import '../../utils/utils.dart';
 import '../../utils/loader.dart' as loader;
+import '../../view/custom_popup_view.dart';
 class AddEmployeeDetailsScreen extends StatefulWidget {
   const AddEmployeeDetailsScreen({Key? key}) : super(key: key);
   @override
@@ -157,7 +158,12 @@ class _AddEmployeeDetailsScreenState extends State<AddEmployeeDetailsScreen> {
                           child: InkWell(
                             onTap: (){
                               final argumentEmployeeData = argument['employeeData'] as AddEmployeeDetailsModel;
-                              deleteEmployeeDetails(id: argumentEmployeeData.id ?? 0,addEmployeeDetailsModel: argumentEmployeeData);
+                              CustomPopup(context,
+                                  message: "Are you sure you want to delete ${argumentEmployeeData.employeeName} details.",
+                                  primaryBtnTxt: "No",
+                                  secondaryBtnTxt: "Yes", secondaryAction: () async {
+                                    deleteEmployeeDetails(id: argumentEmployeeData.id ?? 0,addEmployeeDetailsModel: argumentEmployeeData);
+                                  });
                             },
                               child: ImageUtil.icons.delete(size: 25.sp)))
                     ],

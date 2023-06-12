@@ -11,6 +11,7 @@ import '../../app/home/route/lending_route.dart';
 import '../../networking/Response.dart';
 import '../../utils/utils.dart';
 import '../../utils/loader.dart' as loader;
+import '../../view/custom_popup_view.dart';
 class EmployeeListScreen extends StatefulWidget {
   const EmployeeListScreen({Key? key}) : super(key: key);
 
@@ -145,45 +146,50 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                                     strDate = '${DateFormat('dd MMM, yyyy').format(employeeData.fromDate ?? DateTime.now())} - ${DateFormat('dd MMM, yyyy').format(employeeData.endDate ?? DateTime.now())}';
                                   }
                                   return EmployeeListComponent(deleteTap:() {
-                                      ScaffoldMessenger.of(ctx).hideCurrentSnackBar();
-                                      int second = 3;
-                                      isUndoDelete = false;
-                                      deleteEmployeeData = employeeData;
-                                      deleteIndexValue = index;
-                                      currentEmployeesList.removeAt(index);
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(
-                                            behavior: SnackBarBehavior.fixed,
-                                            content: Row(
-                                              children: [
-                                                const Expanded(child: Text('Employee data has been deleted')),
-                                                InkWell(
-                                                    onTap: (){
-                                                      isUndoDelete = true;
-                                                      currentEmployeesList.insert(deleteIndexValue, deleteEmployeeData);
-                                                      setState(() {
-                                                      });
-                                                      ScaffoldMessenger.of(ctx).hideCurrentSnackBar();
-                                                    },
-                                                    child: Text('Undo',style: CustomTextStyle.font400FontSize15.copyWith(color: const Color(0xff1DA1F2)),))
-                                              ],
-                                            ),
-                                            duration:  Duration(seconds: second),
-                                          ));
-                                      setState(() {
-                                      });
-                                      Future.delayed(Duration(seconds: second)).then((val) {
-                                        // Your logic here
-                                        if(isUndoDelete == false) {
-                                          deleteEmployeeDetails(
-                                              id: employeeData.id ?? 0,
-                                              addEmployeeDetailsModel: employeeData,
-                                              deleteIndex: deleteIndexValue);
-                                        }
-                                      });
-
+                                    ScaffoldMessenger.of(ctx).hideCurrentSnackBar();
+                                    CustomPopup(context,
+                                        message: "Are you sure you want to delete ${employeeData.employeeName} employee details.",
+                                        primaryBtnTxt: "No",
+                                        secondaryBtnTxt: "Yes", secondaryAction: () async {
+                                          int second = 3;
+                                          isUndoDelete = false;
+                                          deleteEmployeeData = employeeData;
+                                          deleteIndexValue = index;
+                                          currentEmployeesList.removeAt(index);
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                behavior: SnackBarBehavior.fixed,
+                                                content: Row(
+                                                  children: [
+                                                    const Expanded(child: Text('Employee data has been deleted')),
+                                                    InkWell(
+                                                        onTap: (){
+                                                          isUndoDelete = true;
+                                                          currentEmployeesList.insert(deleteIndexValue, deleteEmployeeData);
+                                                          setState(() {
+                                                          });
+                                                          ScaffoldMessenger.of(ctx).hideCurrentSnackBar();
+                                                        },
+                                                        child: Text('Undo',style: CustomTextStyle.font400FontSize15.copyWith(color: const Color(0xff1DA1F2)),))
+                                                  ],
+                                                ),
+                                                duration:  Duration(seconds: second),
+                                              ));
+                                          setState(() {
+                                          });
+                                          Future.delayed(Duration(seconds: second)).then((val) {
+                                            // Your logic here
+                                            if(isUndoDelete == false) {
+                                              deleteEmployeeDetails(
+                                                  id: employeeData.id ?? 0,
+                                                  addEmployeeDetailsModel: employeeData,
+                                                  deleteIndex: deleteIndexValue);
+                                            }
+                                          });
+                                        });
                                     }
                                   , rowTap: (){
+                                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                         Navigator.of(context).pushNamed(HomeRouting.addEmployeeDetailsScreenRoute,arguments: {'isEdit':true,
                                           'employeeData':employeeData}).then((value) {
                                           getEmployeeList();
@@ -209,43 +215,48 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
 
                                   return EmployeeListComponent(deleteTap:() {
                                     ScaffoldMessenger.of(ctx).hideCurrentSnackBar();
-                                    int second = 3;
-                                    isUndoDelete = false;
-                                    deleteEmployeeData = employeeData;
-                                    deleteIndexValue = index;
-                                    previousEmployeesList.removeAt(index);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          behavior: SnackBarBehavior.fixed,
-                                          content: Row(
-                                            children: [
-                                              const Expanded(child: Text('Employee data has been deleted')),
-                                              InkWell(
-                                                  onTap: (){
-                                                    isUndoDelete = true;
-                                                    previousEmployeesList.insert(deleteIndexValue, deleteEmployeeData);
-                                                    setState(() {
-                                                    });
-                                                    ScaffoldMessenger.of(ctx).hideCurrentSnackBar();
-                                                  },
-                                                  child: Text('Undo',style: CustomTextStyle.font400FontSize15.copyWith(color: const Color(0xff1DA1F2)),))
-                                            ],
-                                          ),
-                                          duration:  Duration(seconds: second),
-                                        ));
+                                    CustomPopup(context,
+                                        message: "Are you sure you want to delete ${employeeData.employeeName} details.",
+                                        primaryBtnTxt: "No",
+                                        secondaryBtnTxt: "Yes", secondaryAction: () async {
+                                          int second = 3;
+                                          isUndoDelete = false;
+                                          deleteEmployeeData = employeeData;
+                                          deleteIndexValue = index;
+                                          previousEmployeesList.removeAt(index);
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                behavior: SnackBarBehavior.fixed,
+                                                content: Row(
+                                                  children: [
+                                                    const Expanded(child: Text('Employee data has been deleted')),
+                                                    InkWell(
+                                                        onTap: (){
+                                                          isUndoDelete = true;
+                                                          previousEmployeesList.insert(deleteIndexValue, deleteEmployeeData);
+                                                          setState(() {
+                                                          });
+                                                          ScaffoldMessenger.of(ctx).hideCurrentSnackBar();
+                                                        },
+                                                        child: Text('Undo',style: CustomTextStyle.font400FontSize15.copyWith(color: const Color(0xff1DA1F2)),))
+                                                  ],
+                                                ),
+                                                duration:  Duration(seconds: second),
+                                              ));
 
-                                    setState(() {
+                                          setState(() {
+                                          });
+                                          Future.delayed(Duration(seconds: second)).then((val) {
+                                            if(isUndoDelete == false) {
+                                              deleteEmployeeDetails(
+                                                  id: employeeData.id ?? 0,
+                                                  addEmployeeDetailsModel: employeeData,
+                                                  deleteIndex: deleteIndexValue);
+                                            }
+                                          });
                                     });
-                                    Future.delayed(Duration(seconds: second)).then((val) {
-                                      if(isUndoDelete == false) {
-                                        deleteEmployeeDetails(
-                                            id: employeeData.id ?? 0,
-                                            addEmployeeDetailsModel: employeeData,
-                                            deleteIndex: deleteIndexValue);
-                                      }
-                                    });
-                                  }
-                                      , rowTap: (){
+                                  }, rowTap: (){
+                                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                         Navigator.of(context).pushNamed(HomeRouting.addEmployeeDetailsScreenRoute,arguments: {'isEdit':true,
                                           'employeeData':employeeData}).then((value) {
                                           getEmployeeList();
@@ -263,6 +274,7 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
             );}),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
             Navigator.of(context).pushNamed(HomeRouting.addEmployeeDetailsScreenRoute,arguments: {'isEdit':false}).then((value) {
               getEmployeeList();
             });
