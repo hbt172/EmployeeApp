@@ -20,7 +20,7 @@ class App extends StatelessWidget {
             backgroundColor: kAppBarBackgroundColor,
             primaryColor: kPrimaryColor,
             fontFamily: kRegularFonts,
-            snackBarTheme: SnackBarThemeData(
+            snackBarTheme: const SnackBarThemeData(
               actionTextColor: Colors.red,
             )
            ),
@@ -31,7 +31,6 @@ class App extends StatelessWidget {
           final MediaQueryData data = MediaQuery.of(context);
 
           double scaleFactor = 1.0;
-
           if(data.textScaleFactor < 0.8) {
             scaleFactor = 0.8;
           } else if(data.textScaleFactor > 1.5) {

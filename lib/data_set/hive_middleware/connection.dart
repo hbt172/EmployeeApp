@@ -18,7 +18,7 @@ class HiveConnection extends IConnectionInterface {
 
     Directory directory = await getApplicationDocumentsDirectory();
     Hive.init('${directory.path}/home');
-    print("pathhhhh ==> ${directory.path}/home");
+
     collection = await BoxCollection.open(
       'employee', // Name of your database
       boxNames, // Names of your boxes
@@ -30,17 +30,10 @@ class HiveConnection extends IConnectionInterface {
   @override
   Future init() async {
     // initialise
-    // await Hive.initFlutter();
   }
 
   @override
   Future dataSetup() async {
-    final reasonBox = await Hive.openBox("reasons_for_exemption");
-    // if(reasonBox.isEmpty) {
-    //   final list = ReasonForExemptionsDataSet.value;
-    //
-    //   await reasonBox.addAll(list.map((e) => e.toJson()));
-    // }
   }
 
   @override

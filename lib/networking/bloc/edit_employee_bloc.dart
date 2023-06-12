@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter_assignment/main.dart';
 import 'package:flutter_assignment/networking/repository/add_employee_details_repository.dart';
-import 'package:flutter_assignment/networking/source/emplyee_source.dart';
+import 'package:flutter_assignment/networking/source/employee_source.dart';
 import '../../data_set/hive_middleware/database.dart';
 import '../Response.dart';
 import '../model/request/add_employee_details/req_add_employee_details.dart';
@@ -16,21 +16,16 @@ class EditEmployeeBloc {
 
   late final dataset = HiveDatabase();
   EditEmployeeBloc() {
-    // _employeeBlocController = StreamController<Response<bool>>();
     _employeeRepository = EmployeeRepository(source: EmployeeSource(dataSet: database.employee));
   }
-
-  bool isLoggedIn = false;
 
   editEmployeeDetails({required int id,required AddEmployeeDetailsModel addEmployeeDetailsModel}) async {
     editEmployeeDataSink.add(Response.loading('login..'));
     try {
       final deleteEmployeeDetails = await _employeeRepository?.editEmployeeDetails(id: id,addEmployeeDetailsModel: addEmployeeDetailsModel);
-      isLoggedIn = true;
       editEmployeeDataSink.add(Response.completed(deleteEmployeeDetails ?? false));
     } catch (e) {
       editEmployeeDataSink.add(Response.error(e.toString()));
-      isLoggedIn = false;
     }
     return null;
   }

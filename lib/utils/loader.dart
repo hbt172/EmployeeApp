@@ -1,45 +1,7 @@
-//
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_assignment/utils/utils.dart';
-//
-// bool isLoading = true;
-// /// Loader api call
-// void onLoading(BuildContext context) {
-//   showGeneralDialog(
-//     context: context,
-//     barrierColor: Colors.white.withOpacity(0.5),
-//     // background color
-//     barrierDismissible: false,
-//     // should dialog be dismissed when tapped outside
-//     barrierLabel: "Dialog",
-//     // label for barrier
-//     transitionDuration: Duration(milliseconds: 400),
-//     // how long it takes to popup dialog after button click
-//     pageBuilder: (_, __, ___) {
-//       // your widget implementation
-//       return SizedBox.expand(
-//         // makes widget fullscreen
-//         child: Center(
-//           child: Loading(
-//               indicator: BallSpinFadeLoaderIndicator(),
-//               size: 100.0,
-//               color: kAppBarBackgroundColor),
-//         ),
-//       );
-//     },
-//   ).then((value) {
-//     isLoading = false;
-//   });
-// }
-//
-//
-// /// stop loader api call
-// void stopLoader(BuildContext context) {
-//   Navigator.pop(context);
-// }
-//
-//
+
 /// show message dialog
 Future<void> showMyDialog(String msg, BuildContext context) async {
   return showDialog<void>(

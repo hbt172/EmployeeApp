@@ -4,7 +4,6 @@ import 'package:flutter_assignment/Screen/AddEmployeeDetailsScreen/add_employee_
 import '../../../Screen/EmployeeListScreen/employee_list_screen.dart';
 
 class HomeRouting {
-
   static String route = "/";
   static String employeeListScreenRoute = "/EmployeeListScreen";
   static String addEmployeeDetailsScreenRoute = "/AddEmployeeDetailsScreen";

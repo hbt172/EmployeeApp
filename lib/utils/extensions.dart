@@ -1,12 +1,5 @@
 part of utils;
 
-extension AppNavigator on Navigator {
-
-  static void popToFirst(BuildContext context) {
-    Navigator.of(context).popUntil((route) => route.isFirst);
-  }
-}
-
 extension CustomTextStyle on TextStyle {
 
 // font 15
@@ -59,3 +52,18 @@ extension StringValidator on String{
 
 }
 
+
+
+extension DateTimeExtension on DateTime {
+  DateTime next(int day) {
+    if (day == weekday) {
+      return add(const Duration(days: 7));
+    } else {
+      return add(
+        Duration(
+          days: (day - weekday) % DateTime.daysPerWeek,
+        ),
+      );
+    }
+  }
+}

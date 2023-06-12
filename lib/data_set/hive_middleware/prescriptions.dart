@@ -8,10 +8,8 @@ class HivePrescriptions extends IEmployeeInterface {
 
   @override
   Future<bool> addEmployeeDetails({required Map<String, dynamic> data}) async {
-    // TODO: implement addMedication
+    // TODO: implement addEmployeeDetails
     final employeeData = AddEmployeeDetailsDataSet.fromJson(data);
-
-    // bloodPressure.dateTime = DateTime.now();
 
     final box = await Hive.openBox("employeeTable");
 
@@ -20,17 +18,16 @@ class HivePrescriptions extends IEmployeeInterface {
 
     await box.add(employeeData.toJson());
 
-    // box.close();
     return true;
   }
 
   @override
   Future<List<Map<String, dynamic>>?> getEmployeeDetails() async {
-    // TODO: implement getMedication
+    // TODO: implement getEmployeeDetails
     final box = await Hive.openBox("employeeTable");
 
     final values = box.values;
-    // box.close();
+
     return values.map((e) =>  Map<String, dynamic>.from(e)).toList();
   }
 
@@ -38,7 +35,7 @@ class HivePrescriptions extends IEmployeeInterface {
 
   @override
   Future<bool> deleteEmployee({required int id}) async {
-    // TODO: implement deleteReOrderReminder
+    // TODO: implement deleteEmployee
     final box = await Hive.openBox("employeeTable");
 
     final listCount = box.values.toList().length;
@@ -56,7 +53,7 @@ class HivePrescriptions extends IEmployeeInterface {
 
   @override
   Future deleteEmployeeList({required List<int> deleteIdList}) async {
-    // TODO: implement deleteReOrderReminder
+    // TODO: implement deleteEmployeeList
     final box = await Hive.openBox("employeeTable");
 
     final listCount = box.values.toList().length;
@@ -72,24 +69,9 @@ class HivePrescriptions extends IEmployeeInterface {
     }
   }
 
-  // @override
-  // Future<bool> editEmployeeDetails({required int id,required AddEmployeeDetailsModel addEmployeeDetailsModel}) async{
-  //   // TODO: implement deleteReminder
-  //   Map<dynamic,dynamic> record= Hive.box('employeeTable').getAt(id);
-  //   record["employeeName"] = addEmployeeDetailsModel.employeeName;
-  //   record["roleType"] = addEmployeeDetailsModel.roleType;
-  //   record["fromDate"] = addEmployeeDetailsModel.fromDate;
-  //   record["endDate"] = addEmployeeDetailsModel.endDate;
-  //   record["isEndDate"] = addEmployeeDetailsModel.isEndDate;
-  //   record["dateTime"] = addEmployeeDetailsModel.dateTime;
-  //   Hive.box('employeeTable').putAt(id,record);
-  //   return true;
-  // }
-
-
   @override
   Future<bool> editEmployeeDetails({required int id,required Map<String, dynamic> data}) async {
-
+// TODO: implement editEmployeeDetails
     final employeeData = AddEmployeeDetailsModel.fromJson(data);
 
     final box = await Hive.openBox("employeeTable");
@@ -109,16 +91,8 @@ class HivePrescriptions extends IEmployeeInterface {
 
     Hive.box('employeeTable').putAt(id, employeeData.toJson());
     Hive.box('employeeTable').close();
-return true;
-  }
-
-  @override
-  Future<bool> undoDeleteEmployeeDetails({required int deleteIndex,required Map<String, dynamic> data}) async {
-    final employeeData = AddEmployeeDetailsModel.fromJson(data);
-    // Hive.box('employeeTable').putAt(deleteIndex, employeeData.toJson());
-    Hive.box('employeeTable').add(employeeData.toJson());
-    Hive.box('employeeTable').close();
     return true;
   }
+
 }
 
